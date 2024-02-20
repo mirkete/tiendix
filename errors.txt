@@ -1,0 +1,4 @@
+# Errores
+## Error de  sql_full_group_by
+SQL tiene una nueva norma de seguridad que se basa en lo siguiente: Al hacer SELECT con GROUP BY, 
+las columnas deben estar incluidas ya sea en el GROUP BY on en el max(), sum(), count(), etc. 
