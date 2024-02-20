@@ -1,3 +1,5 @@
 node_modules
 pruebas.http
 tiendix.sql
+.env
+errors.txt

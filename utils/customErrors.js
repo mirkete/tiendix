@@ -13,3 +13,11 @@ export class DatabaseError extends Error {
     this.message = message
   }
 }
+
+export class NotFoundError extends Error {
+  constructor (message) {
+    super()
+    this.name = 'NotFound'
+    this.message = message
+  }
+}

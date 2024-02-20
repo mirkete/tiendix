@@ -3,7 +3,7 @@ const errorResponses = {
     res.status(400).send(message)
   },
   DatabaseError: (res, message) => {
-    res.status(500).send('Unexpected error')
+    res.status(500).send(message)
   },
   DefaultError: (res, message) => {
     res.status(500).send('Unexpected error')

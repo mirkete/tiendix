@@ -7,6 +7,7 @@ const app = express()
 
 // Middlewares
 app.use(express.static(path.join(process.cwd(), 'views')))
+app.use(express.json())
 
 // Routes
 app.use('/api', createApiRouter({ model: ShopsModel }))
