@@ -1,7 +1,6 @@
 import express from 'express'
 import path from 'node:path'
 import { createApiRouter } from './routes/apiRouter.js'
-import { createShopsModel } from './models/shopsModel.js'
 
 const app = express()
 
@@ -10,8 +9,8 @@ app.use(express.static(path.join(process.cwd(), 'views')))
 app.use(express.json())
 
 // Routes
-app.use('/api', createApiRouter({ modelCreator: createShopsModel() }))
+app.use('/api', createApiRouter())
 
-app.listen(3000, () => {
-  console.log('Server working on: http://localhost:3000/')
+app.listen(3001, () => {
+  console.log('Server working on: http://localhost:3001/')
 })

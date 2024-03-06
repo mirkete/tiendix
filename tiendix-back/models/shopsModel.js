@@ -6,53 +6,12 @@ import { ValidationError, DatabaseError, NotFoundError } from '../utils/customEr
 import 'dotenv/config.js'
 
 const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = process.env
-
-const productionPoolConfig = {
-  host: DB_HOST,
-  user: DB_USER,
-  password: DB_PASSWORD,
-  database: DB_NAME,
-  waitForConnections: true,
-  connectionLimit: 10,
-  maxIdle: 10,
-  idleTimeout: 60000,
-  queueLimit: 0,
-  enableKeepAlive: true,
-  keepAliveInitialDelay: 0
-}
-
 const privateKey = process.env.PRIVATE_KEY
 
-export function createShopsModel (poolConfig = productionPoolConfig) {
+export function createShopsModel (poolConfig = productionDBConfig) {
   const pool = mysql.createPool(poolConfig)
 
   return class ShopsModel {
-    static logUser = async (data) => {
-      const validation = validateUser(data)
-      if (!validation.success) {
-        return { success: false, data: null, error: new ValidationError('Invalid request') }
-      }
-
-      const { email, password } = data
-      try {
-        const response = await pool.execute(
-          'SELECT BIN_TO_UUID(id) AS id, email, BIN_TO_UUID(shop_id) AS shop_id FROM users ' +
-        'WHERE email = ? AND password = ?',
-          [email, password]
-        )
-        const data = response[0]
-        if (data.length === 0) {
-          return { success: false, data: null, error: new NotFoundError('Not found') }
-        }
-
-        const userData = { ...data[0], shopId: data[0].shop_id, shop_id: undefined }
-        const token = jwt.sign(userData, privateKey, { expiresIn: '7d' })
-
-        return { success: true, data: token }
-      } catch (e) {
-        return { success: false, data: null, error: new DatabaseError('Database error') }
-      }
-    }
 
     static registerUser = async (data) => {
       const validation = validateUserRegister(data)
@@ -66,7 +25,7 @@ export function createShopsModel (poolConfig = productionPoolConfig) {
       try {
         const [userExists] = await pool.execute(
           'SELECT 1 FROM USERS ' +
-        'WHERE email = ?',
+          'WHERE email = ?',
           [email]
         )
         if (userExists.length > 0) {
@@ -79,7 +38,7 @@ export function createShopsModel (poolConfig = productionPoolConfig) {
         )
         const createUser = pool.execute(
           'INSERT INTO users (id, email, password, shop_id) ' +
-        'VALUES (UUID_TO_BIN(?), ?, ?, UUID_TO_BIN(?))',
+          'VALUES (UUID_TO_BIN(?), ?, ?, UUID_TO_BIN(?))',
           [userId, email, password, shopId]
         )
         await Promise.all([createShop, createUser])
@@ -103,7 +62,7 @@ export function createShopsModel (poolConfig = productionPoolConfig) {
       try {
         const response = await pool.execute(
           'SELECT BIN_TO_UUID(id) AS id, name, price, quantity FROM products ' +
-        'WHERE UUID_TO_BIN(?) = shop_id',
+          'WHERE UUID_TO_BIN(?) = shop_id',
           [id]
         )
         const data = response[0]
@@ -126,10 +85,10 @@ export function createShopsModel (poolConfig = productionPoolConfig) {
       try {
         const response = await pool.execute(
           'SELECT BIN_TO_UUID(product_id) AS product_id, COUNT(product_id) AS count, BIN_TO_UUID(shop_id) AS shop_id, clients.name AS client_name, clients.email AS client_email ' +
-        'FROM orders ' +
-        'JOIN clients ON clients.id = orders.client_id ' +
-        'WHERE UUID_TO_BIN(?) = shop_id ' +
-        'GROUP BY product_id, shop_id, client_name, client_email',
+          'FROM orders ' +
+          'JOIN clients ON clients.id = orders.client_id ' +
+          'WHERE UUID_TO_BIN(?) = shop_id ' +
+          'GROUP BY product_id, shop_id, client_name, client_email',
           [id]
         )
 
