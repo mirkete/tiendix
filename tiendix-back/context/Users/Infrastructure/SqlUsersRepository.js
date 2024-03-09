@@ -2,7 +2,7 @@ import { UsersRepository } from "../Domain/UsersRepository.js";
 import crypto from 'node:crypto'
 import mysql from 'mysql2/promise'
 import jwt from 'jsonwebtoken'
-import { validateUser, validateUserRegister } from "../../../schemas/ProductSchemas.js"
+import { validateUser, validateUserRegister } from "../../../schemas/UserSchemas.js"
 import { ValidationError, DatabaseError, NotFoundError } from "../../../utils/customErrors.js"
 import { productionDBConfig } from '../../Shared/ValueObjects/dbConfig.js'
 

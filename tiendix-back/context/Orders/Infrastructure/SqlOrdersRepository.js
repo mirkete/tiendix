@@ -1,6 +1,6 @@
 import mysql from 'mysql2/promise'
 import { OrdersRepository } from "../Domain/OrdersRepository.js"
-import { validateUUID } from "../../../schemas/ProductSchemas.js"
+import { validateUUID } from "../../../schemas/ValidateUUID.js"
 import { ValidationError, DatabaseError } from "../../../utils/customErrors.js"
 import { productionDBConfig } from '../../Shared/ValueObjects/dbConfig.js'
 

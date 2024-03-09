@@ -11,7 +11,7 @@ const errorResponses = {
 }
 
 export function handleError (res, error) {
-  const { name, message } = error
+  const { name = "Error", message = "Error occured" } = error
   const responseFunction = errorResponses[name] ?? errorResponses.DefaultError
   return responseFunction(res, message)
 }

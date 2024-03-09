@@ -6,6 +6,9 @@ export function createProductsRouter () {
   const productsController = new ProductsController()
 
   productsRouter.get("/", productsController.getProductsByShopId)
+  productsRouter.post("/", productsController.createProduct)
+  productsRouter.put("/", productsController.updateProduct)
+  productsRouter.delete("/", productsController.deleteProduct)
 
   return productsRouter
 }
