@@ -1,5 +1,0 @@
-POST http://localhost:3000/api/users/login
-{
-  "email": "test@test.com",
-  "password": "test123"
-}
