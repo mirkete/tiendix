@@ -1,14 +1,9 @@
 import crypto from "node:crypto"
-import mysql from "mysql2/promise"
-import { productionDBConfig } from '../../Shared/ValueObjects/dbConfig.js'
 import { ProductsRepository } from "../Domain/ProductsRepository.js";
 import { validateUUID } from "../../../schemas/ValidateUUID.js";
 import { validateProduct, validatePartialProduct } from "../../../schemas/ProductSchemas.js";
 import { ValidationError, DatabaseError } from "../../../utils/customErrors.js"
-
-const dbConfig = productionDBConfig
-
-const pool = mysql.createPool(dbConfig)
+import { pool } from "../../../database/database.js"
 
 export class SqlProductsRepository extends ProductsRepository {
 

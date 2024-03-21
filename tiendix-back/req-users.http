@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/users/login
+Content-Type: application/json
+
+{
+    "email": "test@test.com",
+    "password": "test123"
+}
+// "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ3MDI1MjM2LWU3YTYtMTFlZS1hM2E4LTRjZWRmYjQ2OGNlMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsInNob3BJZCI6IjhmODE5OWU1LWU3YTYtMTFlZS1hM2E4LTRjZWRmYjQ2OGNlMiIsImlhdCI6MTcxMTA0MzM0MywiZXhwIjoxNzExNjQ4MTQzfQ.bt_N-iPRi6X4zCck8IGW6v5q2SUxVc6245N0qtI9pt4"
+
+###
+
+GET http://localhost:3001/api/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImQ3MDI1MjM2LWU3YTYtMTFlZS1hM2E4LTRjZWRmYjQ2OGNlMiIsImVtYWlsIjoidGVzdEB0ZXN0LmNvbSIsInNob3BJZCI6IjhmODE5OWU1LWU3YTYtMTFlZS1hM2E4LTRjZWRmYjQ2OGNlMiIsImlhdCI6MTcxMTA0MzM0MywiZXhwIjoxNzExNjQ4MTQzfQ.bt_N-iPRi6X4zCck8IGW6v5q2SUxVc6245N0qtI9pt4

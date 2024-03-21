@@ -1,6 +1,6 @@
 export const testUser = {
-  email: 'user@test.com',
-  password: 'password123'
+  email: 'test@test.com',
+  password: 'test123'
 }
 
 export const testPoolConfig = {
@@ -17,4 +17,4 @@ export const testPoolConfig = {
   keepAliveInitialDelay: 0
 }
 
-export const shopId = 'b762343e-d0d5-11ee-a51c-ace2d37d429a'
+export const shopId = '8f8199e5-e7a6-11ee-a3a8-4cedfb468ce2'

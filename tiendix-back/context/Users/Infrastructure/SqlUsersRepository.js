@@ -1,15 +1,10 @@
 import { UsersRepository } from "../Domain/UsersRepository.js";
 import crypto from 'node:crypto'
-import mysql from 'mysql2/promise'
 import jwt from 'jsonwebtoken'
 import { validateUser, validateUserRegister } from "../../../schemas/UserSchemas.js"
 import { ValidationError, DatabaseError, NotFoundError } from "../../../utils/customErrors.js"
-import { productionDBConfig } from '../../Shared/ValueObjects/dbConfig.js'
-
-const privateKey = process.env.PRIVATE_KEY
-const dbConfig = productionDBConfig
-
-const pool = mysql.createPool(dbConfig)
+import { privateKey } from '../../Shared/ValueObjects/environment.js'
+import { pool } from "../../../database/database.js"
 
 export class SqlUsersRepository extends UsersRepository {
   static logUser = async (userCredentials) => {

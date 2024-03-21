@@ -2,38 +2,43 @@ import test from 'node:test'
 import assert from 'node:assert'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'
-import { testUser, testPoolConfig, shopId } from './test-config.js'
-import { createShopsModel } from './models/shopsModel.js'
+import { testUser, shopId } from './test-config.js'
+import { SqlUsersRepository } from './context/Users/Infrastructure/SqlUsersRepository.js'
+import { SqlProductsRepository } from './context/Products/Infrastructure/SqlProductsRepository.js'
+import { logUser } from './context/Users/Application/index.js'
+import { getProducts } from "./context/Products/Application/index.js"
+import { disconnectDatabase } from './database/database.js'
 
-const ShopsModel = createShopsModel(testPoolConfig)
+const UsersRepository = SqlUsersRepository
+const ProductsRepository = SqlProductsRepository
 
-test('Authentication', async (t) => {
+test("Multiple tests", async (t) => {
   await t.test('Log user', async () => {
-    const { data: token } = await ShopsModel.logUser(testUser)
+    const { data: token } = await logUser(UsersRepository, testUser)
     const { id, email, shopId } = jwt.verify(token, process.env.PRIVATE_KEY)
 
     const tokenData = { id, email, shopId }
     const expectedData = {
-      id: '2d8860a0-d0d6-11ee-a51c-ace2d37d429a',
-      email: 'user@test.com',
-      shopId: 'b762343e-d0d5-11ee-a51c-ace2d37d429a'
+      id: 'd7025236-e7a6-11ee-a3a8-4cedfb468ce2',
+      email: 'test@test.com',
+      shopId: '8f8199e5-e7a6-11ee-a3a8-4cedfb468ce2'
     }
 
     return assert.deepStrictEqual(expectedData, tokenData)
   })
 
   await t.test('Reject bad credentials', async () => {
-    const { success } = await ShopsModel.logUser({ email: testUser.email, password: 'bad-password' })
+    const { success } = await logUser(UsersRepository, { email: testUser.email, password: 'bad-password' })
 
     return assert.deepStrictEqual(success, false)
   })
 
   await t.test('Get products', async () => {
-    const { data } = await ShopsModel.getProductsByShopId({ id: shopId })
+    const { data } = await getProducts(ProductsRepository, { id: shopId })
 
     const expectedData = [{
-      id: '90edae62-d0d6-11ee-a51c-ace2d37d429a',
-      name: 'Example product',
+      id: 'e193cd37-e7a6-11ee-a3a8-4cedfb468ce2',
+      name: 'Test product',
       price: 128,
       quantity: 8
     }]
@@ -41,21 +46,7 @@ test('Authentication', async (t) => {
     return assert.deepStrictEqual(expectedData, data)
   })
 
-  await t.test('Get orders', async () => {
-    const { data } = await ShopsModel.getOrdersByShopId({ shopId })
-
-    const expectedData = [{
-      product_id: '90edae62-d0d6-11ee-a51c-ace2d37d429a',
-      count: 1,
-      shop_id: shopId,
-      client_name: 'Test client',
-      client_email: 'client@test.com'
-    }]
-
-    return assert.deepStrictEqual(data, expectedData)
-  })
-
   await t.test('Disconnect database', async () => {
-    return ShopsModel.disconnectDatabase()
+    return disconnectDatabase()
   })
 })

@@ -1,6 +1,6 @@
 import 'dotenv/config.js'
 
-const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME } = process.env
+const { DB_HOST, DB_USER, DB_PASSWORD, DB_NAME, PRIVATE_KEY } = process.env
 
 export const productionDBConfig = {
   host: DB_HOST,
@@ -15,3 +15,5 @@ export const productionDBConfig = {
   enableKeepAlive: true,
   keepAliveInitialDelay: 0
 }
+
+export const privateKey = PRIVATE_KEY

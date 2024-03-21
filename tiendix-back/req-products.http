@@ -1,0 +1,34 @@
+// PRODUCTS SECTION
+GET http://localhost:3001/api/products?id=8f8199e5-e7a6-11ee-a3a8-4cedfb468ce2
+
+###
+
+POST http://localhost:3001/api/products
+Content-Type: application/json
+
+{
+    "name": "Test product created",
+    "price": 256,
+    "quantity": 16,
+    "shop_id": "8f8199e5-e7a6-11ee-a3a8-4cedfb468ce2"
+}
+// id: "e5c76cac-35de-4987-b0b7-56c5e51078b4"
+
+###
+
+PUT http://localhost:3001/api/products
+Content-Type: application/json
+
+{
+    "id": "e5c76cac-35de-4987-b0b7-56c5e51078b4",
+    "name": "Test product created and updated"
+}
+
+###
+
+DELETE http://localhost:3001/api/products
+Content-Type: application/json
+
+{
+    "id": "e5c76cac-35de-4987-b0b7-56c5e51078b4"
+}

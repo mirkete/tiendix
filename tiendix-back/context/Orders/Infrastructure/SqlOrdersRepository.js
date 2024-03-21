@@ -1,20 +1,15 @@
-import mysql from 'mysql2/promise'
 import { OrdersRepository } from "../Domain/OrdersRepository.js"
 import { validateUUID } from "../../../schemas/ValidateUUID.js"
 import { ValidationError, DatabaseError } from "../../../utils/customErrors.js"
-import { productionDBConfig } from '../../Shared/ValueObjects/dbConfig.js'
-
-const dbConfig = productionDBConfig
-
-const pool = mysql.createPool(dbConfig)
+import { pool } from "../../../database/database.js"
 
 export class SqlOrdersRepository extends OrdersRepository {
   static getOrders = async (data) => {
     const { shopId } = data
     const shopIdObject = { id: shopId }
-
-    const validation = validateUUID(shopIdObject)
+    const validation = await validateUUID(shopIdObject)
     if (!validation.success) {
+      console.log(validation)
       return { success: false, data: null, error: new ValidationError('Invalid request') }
     }
 

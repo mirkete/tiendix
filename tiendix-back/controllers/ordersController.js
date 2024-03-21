@@ -1,5 +1,6 @@
 import { getOrders } from "../context/Orders/Application/GetOrders.js"
 import { SqlOrdersRepository } from "../context/Orders/Infrastructure/SqlOrdersRepository.js"
+import { handleError } from "../utils/errorHandler.js"
 
 const ordersRepository = SqlOrdersRepository
 
