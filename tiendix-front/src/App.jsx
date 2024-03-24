@@ -1,53 +1,29 @@
-import { useState } from 'react'
-import './App.css'
-import { Input } from './components/Input.jsx'
-import { ReactUsersRepository } from '../context/Users/Infrastructure/ReactUsersRepository.js'
-import { logUser } from "../context/Users/Application/index.js"
+import "./App.css"
+import { Link } from "react-router-dom"
+import {useLocalStorage} from "./hooks/useLocalStorage.js"
+import LogOut from "./components/LogOut.jsx"
 
-function App() {
+export default function App(){
+  const [shopName, setShopName] = useLocalStorage("shopName", null)
 
-  const [formData, setFormData] = useState({
-    email: "",
-    password: ""
-  })
-
-  const handleEmailChange = (value) => {
-    setFormData({
-      ...formData,
-      email: value
-    })
-  }
-
-  const handlePasswordChange = (value) => {
-    setFormData({
-      ...formData,
-      password: value
-    })
-  }
-
-  const handleSubmit = async (e) => {
-    e.preventDefault()
-
-    await logUser(ReactUsersRepository, formData)
-
-    setFormData({
-      email: "",
-      password: ""
-    })
-  }
-
-  return (
+  return(
     <div className="container">
-      <form onSubmit={handleSubmit}>
-        <header>
-          <h1>Inicio de sesion</h1>
-        </header>
-        <Input type="text" placeholder="Correo electronico" value={formData.email} setValue={handleEmailChange}></Input>
-        <Input type="password" placeholder="Contraseña" value={formData.password} setValue={handlePasswordChange}></Input>
-        <button type='submit'>Iniciar sesion</button>
-      </form>
+        
+        {
+            shopName
+            ? <>
+              <h1>Hola, {shopName}!</h1>
+              <LogOut style={{placeSelf:"center"}}></LogOut>
+            </>
+            : <>
+              <div className="anchors-cont">
+                <Link to="/login">Iniciar sesion</Link>
+                <Link to="/register">Registrarse</Link>
+              </div>
+
+              <h1>Debes registrarte o iniciar sesion</h1>
+            </>
+        }
     </div>
   )
 }
-
-export default App

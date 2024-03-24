@@ -11,7 +11,22 @@ export class ReactUsersRepository extends UsersRepository{
             body: JSON.stringify(userCredentials)
         })
 
-        const token = await response.text()
+        const {token, shopName} = await response.json()
         window.localStorage.setItem("token", token)
+        window.localStorage.setItem("shopName", shopName)
+    }
+
+    static registerUser = async (userData) => {
+        const response = await fetch(`${API_URL}/users/register`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(userData)
+        })
+
+        const {token, shopName} = await response.json()
+        window.localStorage.setItem("token", token)
+        window.localStorage.setItem("shopName", shopName)
     }
 }

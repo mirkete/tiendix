@@ -39,6 +39,12 @@ CREATE TABLE orders (
     FOREIGN KEY (client_id) REFERENCES clients(id)
 );
 
+SELECT BIN_TO_UUID(users.id) AS id, email, BIN_TO_UUID(shop_id) AS shop_id, shops.name AS name FROM users
+LEFT JOIN shops ON users.shop_id = shops(id)
+WHERE email = "test@test.com" AND password = "test123";
+
+SELECT * FROM products;
+
 /* Shop id: '8f8199e5-e7a6-11ee-a3a8-4cedfb468ce2' */
 /* User id: 'd7025236-e7a6-11ee-a3a8-4cedfb468ce2' */
 /* Product id: 'e193cd37-e7a6-11ee-a3a8-4cedfb468ce2' */

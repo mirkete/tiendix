@@ -16,7 +16,8 @@ export class SqlUsersRepository extends UsersRepository {
     const { email, password } = userCredentials
     try {
       const response = await pool.execute(
-        'SELECT BIN_TO_UUID(id) AS id, email, BIN_TO_UUID(shop_id) AS shop_id FROM users ' +
+        'SELECT BIN_TO_UUID(users.id) AS id, email, BIN_TO_UUID(shop_id) AS shop_id, shops.name AS shopName FROM users ' +
+        'JOIN shops ON users.shop_id = shops.id ' +
         'WHERE email = ? AND password = ?',
         [email, password]
       )
@@ -25,12 +26,12 @@ export class SqlUsersRepository extends UsersRepository {
         return { success: false, data: null, error: new NotFoundError('Not found') }
       }
 
+      const {shopName} = data[0]
       const userData = { ...data[0], shopId: data[0].shop_id, shop_id: undefined }
       const token = jwt.sign(userData, privateKey, { expiresIn: '7d' })
 
-      return { success: true, data: token }
+      return { success: true, data: {token, shopName} }
     } catch (e) {
-      console.log(e)
       return { success: false, data: null, error: new DatabaseError(e) }
     }
   }
@@ -68,7 +69,7 @@ export class SqlUsersRepository extends UsersRepository {
       const tokenData = { id: userId, email, shopId }
       const token = jwt.sign(tokenData, privateKey)
 
-      return { success: true, data: token }
+      return { success: true, data: {token, shopName} }
     } catch (e) {
       return { success: false, data: null, error: new DatabaseError('Database error') }
     }
