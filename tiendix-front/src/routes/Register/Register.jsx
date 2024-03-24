@@ -35,15 +35,15 @@ export default function Register(){
     }
 
     return(
-        <div className="container">
+        <div className="container" style={{placeContent:"center"}}>
             <form onSubmit={handleSubmit}>
                 <header>
-                <h1>Registrar usuario</h1>
+                <h1>Registrar tienda</h1>
                 </header>
                 <Input type="text" placeholder="Nombre de la tienda" value={formData["shop_name"]} setValue={handleShopNameChange}></Input>
                 <Input type="text" placeholder="Correo electronico" value={formData.email} setValue={handleEmailChange}></Input>
                 <Input type="password" placeholder="Contraseña" value={formData.password} setValue={handlePasswordChange}></Input>
-                <button type='submit'>Iniciar sesion</button>
+                <button type='submit'>Registrarse</button>
             </form>
         </div>
     )

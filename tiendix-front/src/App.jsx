@@ -7,7 +7,7 @@ export default function App(){
   const [shopName, setShopName] = useLocalStorage("shopName", null)
 
   return(
-    <div className="container">
+    <div className="container" style={{placeContent:"center"}}>
         
         {
             shopName

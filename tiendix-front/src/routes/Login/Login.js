@@ -18,13 +18,13 @@ export const updatePassword = (value, updater, formData) => {
 export const makeLogin = async (formData, navigate, setFormData) => {
 	await logUser(ReactUsersRepository, formData)
 	.then(() => {
-			navigate("/")
+		navigate("/")
 	})
-	.catch((err) => {
-			console.log(err)
-			setFormData({
-					email: "",
-					password: ""
-			})
+	.catch(() => {
+		alert("Las credenciales son invalidas. Compruebelas e intente nuevamente")
+		setFormData({
+				email: "",
+				password: ""
+		})
 	})
 }

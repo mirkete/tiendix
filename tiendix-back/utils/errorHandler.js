@@ -1,12 +1,12 @@
 const errorResponses = {
   ValidationError: (res, message) => {
-    res.status(400).send(message)
+    res.status(400).json({err:message})
   },
   DatabaseError: (res, message) => {
-    res.status(500).send(message)
+    res.status(500).json({err:message})
   },
   DefaultError: (res, message) => {
-    res.status(500).send(message)
+    res.status(500).json({err:message})
   }
 }
 

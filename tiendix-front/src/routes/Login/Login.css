@@ -1,19 +1,3 @@
-*{
-  box-sizing: border-box;
-}
-
-html, body{
-  margin: 0;
-  min-height: 100dvh;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-.container{
-  min-height: 100dvh;
-  display: grid;
-  place-content: center;
-}
-
 form{
   display: flex;
   flex-direction: column;

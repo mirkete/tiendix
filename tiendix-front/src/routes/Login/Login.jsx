@@ -33,12 +33,12 @@ function Login() {
   }
 
   return (
-    <div className="container">
+    <div className="container" style={{placeContent:"center"}}>
       <form onSubmit={handleSubmit}>
         <header>
           <h1>Inicio de sesion</h1>
         </header>
-        <Input type="text" placeholder="Correo electronico" value={formData.email} setValue={handleEmailChange}></Input>
+        <Input type="email" placeholder="Correo electronico" value={formData.email} setValue={handleEmailChange}></Input>
         <Input type="password" placeholder="Contraseña" value={formData.password} setValue={handlePasswordChange}></Input>
         <Button type="submit">Iniciar sesion</Button>
       </form>
